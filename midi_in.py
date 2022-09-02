@@ -5,8 +5,10 @@ import time
 
 import rtmidi.midiutil as midi
 
-midi_in, port_name = midi.open_midiinput(0)
+# Methode open_midiinput wird ausgeführt und in zwei Variablen destrukturiert, die den jew. Werten des Tuples (= Rückgabewert von open_midiinput) zugewiesen werden
+midi_in, port_name = midi.open_midiinput()
 
+# Schlüssel für Eventtypen
 channel_events = {
   144: 'NOTE_ON',
   128: 'NOTE_OFF',
@@ -17,19 +19,27 @@ channel_events = {
   224: 'PITCH'
 }
 
+# Einbettung des MIDI-Monitorings in try-except-Block
 try:
     while True:
         # Rückgabewert von get_message ist: (<Die Note>, <vergangene Zeit seit letztem Befehl>)
         msg = midi_in.get_message()
         if msg:
+            # Destrukturierung, weil wir nur einen Teil davon benutzen wollen
             message, delta = msg
-            [event, note, velocity] = message # Zugriff auf einzelne Parameter möglich
+            # Zugriff auf einzelne Parameter möglich (weitere Destrukturierung)
+            [event, note, velocity] = message
+            # keine Ausgabe, falls nicht im dict
             if event not in channel_events:
                 continue
+            # 'channel_events' wird  benutzt, so dass statt Zahlen die jew. Bedeutungen angezeigt werden
             print(f"channel: {channel_events[event]}, note: {note}, velocity: {velocity}")
+        # Polling-Intervall (Abfragen pro Sekunde werden begrenzt, um Ressourcen zu sparen) 
         time.sleep(0.1)
-except KeyboardInterrupt:
+# Loop kann per ctrl+C gestoppt werden
+except KeyboardInterrupt: 
     pass
-finally:
+# MIDI-Port wieder schließen und Variable aus dem Speicher entfernen
+finally:    
     midi_in.close_port()
     del midi_in
