@@ -49,14 +49,3 @@ def get_midi_out(port=None) -> tuple:
         tuple: rtmidi object, port name
     """
     return midi.open_midioutput(port)
-
-
-# EXAMPLE: destructured assignment of "open_midioutput"-tuple
-# midi_output, portname = get_midi_out()
-
-# with midi_output:
-#     play_chord(midi_output, [60, 64, 67, 71], hold_time=3)
-#     time.sleep(0.1)
-
-# midi_output.close_port()
-# del midi_output
