@@ -4,6 +4,7 @@ This module is an example for generating MIDI output.
 import time
 # Only modules 'midiutil' and 'midiconstants' are imported and assigned to var 'midi'
 import rtmidi.midiutil as midi
+import rtmidi
 # variables imported from midiconstants for better readability of code
 from rtmidi.midiconstants import NOTE_OFF, NOTE_ON
 
@@ -49,3 +50,7 @@ def get_midi_out(port=None) -> tuple:
         tuple: rtmidi object, port name
     """
     return midi.open_midioutput(port)
+
+def get_out_ports():
+    midiout = rtmidi.MidiOut(midi.get_api_from_environment(rtmidi.API_UNSPECIFIED))
+    return midiout.get_ports()
