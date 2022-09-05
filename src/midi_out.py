@@ -39,13 +39,17 @@ def play_chord(midi_obj, notes, velocity=0, hold_time=1) -> None:
     for note in notes:
         midi_obj.send_message([NOTE_OFF, note, 0]) # note OFF
 
-def get_midi_out() -> tuple:
+def get_midi_out(port=None) -> tuple:
     """Creates outbound rtmidi object for further use
+
+    Args:
+        port (int, optional): Designate MIDI port. Defaults to None.
 
     Returns:
         tuple: rtmidi object, port name
     """
-    return midi.open_midioutput()
+    return midi.open_midioutput(port)
+
 
 # EXAMPLE: destructured assignment of "open_midioutput"-tuple
 # midi_output, portname = get_midi_out()

@@ -5,8 +5,19 @@ import time
 
 import rtmidi.midiutil as midi
 
+
 # Methode open_midiinput wird ausgeführt und in zwei Variablen destrukturiert, die den jew. Werten des Tuples (= Rückgabewert von open_midiinput) zugewiesen werden
-midi_in, port_name = midi.open_midiinput()
+def get_midi_in() -> tuple:
+    """Generates MIDI input object using rtmidi-library
+
+    Returns:
+        tuple: rtmidi-object, port name
+    """
+    return midi.open_midiinput()
+
+
+midi_in, port_name = get_midi_in()
+
 
 # Schlüssel für Eventtypen
 channel_events = {
