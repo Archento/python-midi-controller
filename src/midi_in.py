@@ -1,10 +1,10 @@
 """
-Dieses Modul soll MIDI eingaben verarbeiten
+This module processes MIDI inputs
 """
 import rtmidi.midiutil as midi
 import rtmidi
 
-# Methode open_midiinput wird ausgeführt und in zwei Variablen destrukturiert, die den jew. Werten des Tuples (= Rückgabewert von open_midiinput) zugewiesen werden
+# Method ".open_midiinput" is executed and destructured into 2 variables, which are assigned to the respective values of the tuple (= return values from open_midiinput)
 def get_midi_in(port = None) -> tuple:
     """Generates MIDI input object using rtmidi-library
 
@@ -13,17 +13,23 @@ def get_midi_in(port = None) -> tuple:
     """
     return midi.open_midiinput(port)
 
+
 def get_in_ports():
-    midiin = rtmidi.MidiIn(midi.get_api_from_environment(rtmidi.API_UNSPECIFIED))
+    """Creates function to get MIDI IN port information from OS MIDI module
+
+    Returns:
+        function: obtain MIDI Input port information from OS
+    """
+    midiin = rtmidi.MidiIn(midi.get_api_from_environment())
     return midiin.get_ports()
 
-# Schlüssel für Eventtypen
+# Dictionary of keys for different MIDI events
 channel_events = {
-  144: 'NOTE_ON',
-  128: 'NOTE_OFF',
-  160: 'POLY',
-  176: 'CTRL_CNG',
-  192: 'PGR_CNG',
-  208: 'AFTERTOUCH',
-  224: 'PITCH'
+  144: "NOTE_ON",
+  128: "NOTE_OFF",
+  160: "POLY",
+  176: "CTRL_CNG",
+  192: "PGR_CNG",
+  208: "AFTERTOUCH",
+  224: "PITCH"
 }

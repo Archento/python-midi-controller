@@ -52,5 +52,10 @@ def get_midi_out(port=None) -> tuple:
     return midi.open_midioutput(port)
 
 def get_out_ports():
-    midiout = rtmidi.MidiOut(midi.get_api_from_environment(rtmidi.API_UNSPECIFIED))
+    """Generate function for fetching MIDI OUT port information from OS MIDI module
+
+    Returns:
+        function: fetches MIDI OUT port information
+    """
+    midiout = rtmidi.MidiOut(midi.get_api_from_environment())
     return midiout.get_ports()
